@@ -1,5 +1,11 @@
-import React, { createContext, ReactNode } from "react";
+import React, { createContext, ReactNode, useState } from "react";
 import { api } from "../services/api";
+
+type TUser = {
+  email: string;
+  permissions: string[];
+  roles: string[];
+};
 
 type TSignInCredentials = {
   email: string;
@@ -18,6 +24,7 @@ type TAuthProviderProps = {
 export const AuthContext = createContext({} as TAuthContextData);
 
 export const AuthProvider = ({ children }: TAuthProviderProps) => {
+  const [user, setUser] = useState<TUser>();
   const isAuthenticated = false;
 
   const signIn = async ({ email, password }: TSignInCredentials) => {
@@ -26,7 +33,10 @@ export const AuthProvider = ({ children }: TAuthProviderProps) => {
         email,
         password,
       });
-      console.log(response.data);
+
+      const { permissions, roles } = response.data;
+
+      setUser({ email, permissions, roles });
     } catch (err) {
       console.log(err);
     }
