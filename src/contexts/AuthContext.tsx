@@ -1,4 +1,5 @@
 import React, { createContext, ReactNode } from "react";
+import { api } from "../services/api";
 
 type TSignInCredentials = {
   email: string;
@@ -20,7 +21,15 @@ export const AuthProvider = ({ children }: TAuthProviderProps) => {
   const isAuthenticated = false;
 
   const signIn = async ({ email, password }: TSignInCredentials) => {
-    console.log(email, password);
+    try {
+      const response = await api.post("sessions", {
+        email,
+        password,
+      });
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
