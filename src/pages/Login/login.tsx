@@ -1,11 +1,14 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 import "./login.css";
 
 function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event: FormEvent) => {
+  const { signIn, isAuthenticated } = useContext(AuthContext);
+
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
     const data = {
@@ -13,7 +16,7 @@ function App() {
       password,
     };
 
-    console.log(data);
+    await signIn(data);
   };
 
   return (
