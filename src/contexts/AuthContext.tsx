@@ -37,7 +37,10 @@ export const AuthProvider = ({ children }: TAuthProviderProps) => {
         password,
       });
 
-      const { permissions, roles } = response.data;
+      const { permissions, roles, token, refreshToken } = response.data;
+
+      localStorage.setItem("reactauth.token", token)
+      localStorage.setItem("reactauth.refreshToken", refreshToken)
 
       setUser({ email, permissions, roles });
 
