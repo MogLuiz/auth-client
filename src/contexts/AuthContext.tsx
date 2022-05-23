@@ -16,6 +16,7 @@ type TSignInCredentials = {
 
 type TAuthContextData = {
   signIn(credentials: TSignInCredentials): Promise<void>;
+  user?: TUser;
   isAuthenticated: boolean;
 };
 
@@ -27,8 +28,7 @@ export const AuthContext = createContext({} as TAuthContextData);
 
 export const AuthProvider = ({ children }: TAuthProviderProps) => {
   const [user, setUser] = useState<TUser>();
-  const isAuthenticated = false;
-  console.log(user);
+  const isAuthenticated = !!user;
 
   const signIn = async ({ email, password, navigate }: TSignInCredentials) => {
     try {
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }: TAuthProviderProps) => {
   };
 
   return (
-    <AuthContext.Provider value={{ signIn, isAuthenticated }}>
+    <AuthContext.Provider value={{ signIn, isAuthenticated, user }}>
       {children}
     </AuthContext.Provider>
   );

@@ -19,7 +19,7 @@ function App() {
       navigate
     };
 
-    await signIn(data);
+    signIn(data);
   };
 
   return (
