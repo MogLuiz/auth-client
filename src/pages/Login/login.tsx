@@ -1,10 +1,12 @@
 import { FormEvent, useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import "./login.css";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const { signIn, isAuthenticated } = useContext(AuthContext);
 
@@ -14,6 +16,7 @@ function App() {
     const data = {
       email,
       password,
+      navigate
     };
 
     await signIn(data);

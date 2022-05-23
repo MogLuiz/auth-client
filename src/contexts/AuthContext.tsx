@@ -1,7 +1,6 @@
 import React, { createContext, ReactNode, useState } from "react";
 import { api } from "../services/api";
-
-import { useHistory } from "react-router-dom";
+import { NavigateFunction } from "react-router-dom";
 
 type TUser = {
   email: string;
@@ -12,6 +11,7 @@ type TUser = {
 type TSignInCredentials = {
   email: string;
   password: string;
+  navigate: NavigateFunction;
 };
 
 type TAuthContextData = {
@@ -28,11 +28,9 @@ export const AuthContext = createContext({} as TAuthContextData);
 export const AuthProvider = ({ children }: TAuthProviderProps) => {
   const [user, setUser] = useState<TUser>();
   const isAuthenticated = false;
-  const history = useHistory();
-
   console.log(user);
 
-  const signIn = async ({ email, password }: TSignInCredentials) => {
+  const signIn = async ({ email, password, navigate }: TSignInCredentials) => {
     try {
       const response = await api.post("sessions", {
         email,
@@ -43,7 +41,7 @@ export const AuthProvider = ({ children }: TAuthProviderProps) => {
 
       setUser({ email, permissions, roles });
 
-      history.push("/dashboard");
+      navigate("/dashboard");
     } catch (err) {
       console.log(err);
     }

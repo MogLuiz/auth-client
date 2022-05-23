@@ -2,9 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
+import Router from "./routes/Router";
 
 import { QueryClient, QueryClientProvider } from "react-query";
 import { AuthProvider } from "./contexts/AuthContext";
+import { BrowserRouter } from "react-router-dom";
 
 const queryClient = new QueryClient();
 
@@ -12,7 +14,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <App />
+        <BrowserRouter>
+          <Router />
+        </BrowserRouter>
       </AuthProvider>
     </QueryClientProvider>
   </React.StrictMode>
