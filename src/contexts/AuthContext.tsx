@@ -55,6 +55,8 @@ export const AuthProvider = ({ children }: TAuthProviderProps) => {
 
       setUser({ email, permissions, roles });
 
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
       navigate("/dashboard");
     } catch (err) {
       console.log(err);
